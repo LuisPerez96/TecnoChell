@@ -1,55 +1,79 @@
 <?php
+  if (!empty($_GET['q'])) {
+    switch ($_GET['q']) {
+      case 'info':
+        phpinfo(); 
+        exit;
+      break;
+    }
+  }
+?>
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Laragon</title>
 
-use Illuminate\Contracts\Http\Kernel;
-use Illuminate\Http\Request;
+        <link href="https://fonts.googleapis.com/css?family=Karla:400" rel="stylesheet" type="text/css">
 
-define('LARAVEL_START', microtime(true));
+        <style>
+            html, body {
+                height: 100%;
+            }
 
-/*
-|--------------------------------------------------------------------------
-| Check If The Application Is Under Maintenance
-|--------------------------------------------------------------------------
-|
-| If the application is in maintenance / demo mode via the "down" command
-| we will load this file so that any pre-rendered content can be shown
-| instead of starting the framework, which could cause an exception.
-|
-*/
+            body {
+                margin: 0;
+                padding: 0;
+                width: 100%;
+                display: table;
+                font-weight: 100;
+                font-family: 'Karla';
+            }
 
-if (file_exists($maintenance = __DIR__.'/../storage/framework/maintenance.php')) {
-    require $maintenance;
-}
+            .container {
+                text-align: center;
+                display: table-cell;
+                vertical-align: middle;
+            }
 
-/*
-|--------------------------------------------------------------------------
-| Register The Auto Loader
-|--------------------------------------------------------------------------
-|
-| Composer provides a convenient, automatically generated class loader for
-| this application. We just need to utilize it! We'll simply require it
-| into the script here so we don't need to manually load our classes.
-|
-*/
+            .content {
+                text-align: center;
+                display: inline-block;
+            }
 
-require __DIR__.'/../vendor/autoload.php';
+            .title {
+                font-size: 96px;
+            }
 
-/*
-|--------------------------------------------------------------------------
-| Run The Application
-|--------------------------------------------------------------------------
-|
-| Once we have the application, we can handle the incoming request using
-| the application's HTTP kernel. Then, we will send the response back
-| to this client's browser, allowing them to enjoy our application.
-|
-*/
+            .opt {
+                margin-top: 30px;
+            }
 
-$app = require_once __DIR__.'/../bootstrap/app.php';
+            .opt a {
+              text-decoration: none;
+              font-size: 150%;
+            }
+            
+            a:hover {
+              color: red;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="content">
+                <div class="title" title="Laragon">Laragon</div>
+     
+                <div class="info"><br />
+                      <?php print($_SERVER['SERVER_SOFTWARE']); ?><br />
+                      PHP version: <?php print phpversion(); ?>   <span><a title="phpinfo()" href="/?q=info">info</a></span><br />
+                      Document Root: <?php print ($_SERVER['DOCUMENT_ROOT']); ?><br />
 
-$kernel = $app->make(Kernel::class);
+                </div>
+                <div class="opt">
+                  <div><a title="Getting Started" href="https://laragon.org/docs">Getting Started</a></div>
+                </div>
+            </div>
 
-$response = $kernel->handle(
-    $request = Request::capture()
-)->send();
-
-$kernel->terminate($request, $response);
+        </div>
+    </body>
+</html>
